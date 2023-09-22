@@ -1,0 +1,279 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block title %}
+    Video Detail
+{% endblock title %}
+
+{% block custom_css %}
+    <!-- Docs styles -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/CDNSFree2/Plyr/plyr.css" />
+
+{% endblock custom_css %}
+
+
+{% block content %}
+    <main class="main_wrapper">
+        <div class="blogarea__2 sp_top_100 sp_bottom_100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-8 col-lg-8">
+                        <div data-aos="fade-up" class=''>
+                            <h4 id="video-title">{{ video.title }}</h4>
+                        </div>
+
+                        {% if credit_balance > 0 or remaining_free_credits > 0 %}
+
+                            <div class="blogarae__img__2 course__details__img__2" data-aos="fade-up">
+                                <img width="770" height="470" src="{% static 'base/img/blog/blog_7.png' %}" alt="blog">
+
+                                <div class="registerarea__content course__details__video">
+                                    <div class="registerarea__video" id="video-container">
+                                        <div style="width: 770px; height: 480px;" class="plyr__video-embed" id="player">
+                                            <iframe id="video-frame" src="https://www.youtube.com/embed/{{ video.video_id }}" allowfullscreen allowtransparency allow="autoplay"></iframe>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        {% else %}
+                            <div class="course__content__item locked-video">
+                                <div class="course__content__watch_icon">
+                                    <img width="770" height="400" src="{% static 'base/img/blog/lockimage.jpg' %}" alt="blog">
+                                </div>
+                            </div>
+                        {% endif %}
+                        
+                        
+                        <div class="blog__details__content__wraper">
+                            <div class="course__details__tab__wrapper" data-aos="fade-up">
+                                <div class="row mt-2">
+                                    <div class="col-xl-12">
+                                        <div>
+                                            <!-- Make sure to include placeholders for displaying remaining credits and credit balance -->
+                                            <h4>Remaining Free Credits: <span id="remaining-free-credits">{{ remaining_free_credits }}</span> sec.</h4>
+                                            <h4>Credit Balance: <span id="credit-balance">{{ credit_balance }} sec.</span></h4>
+
+                                            {% if credit_balance <= 0 and remaining_free_credits <= 0 %}
+                                                <div class="insufficient-credits-message mb-4">
+                                                    <p class='text-danger'>Your credits are over. Please purchase more credits to continue watching videos.</p>
+                                                    <a href="{% url 'checkout' course.id %}" class="btn btn-primary">Purchase Credits</a>
+                                                </div>
+                                                <hr>
+                                            {% endif %}  
+                                        </div>
+                                        
+
+                                        <ul class="nav course__tap__wrap" id="myTab" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="single__tab__link active" data-bs-toggle="tab"
+                                                    data-bs-target="#projects__one" type="button">
+                                                    <i class="icofont-paper"></i>Overview
+                                                </button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="single__tab__link" data-bs-toggle="tab"
+                                                    data-bs-target="#projects__two" type="button">
+                                                    <i class="icofont-book-alt"></i>Resources
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="tab-content tab__content__wrapper" id="myTabContent">
+                                    <div class="tab-pane fade active show" id="projects__one" role="tabpanel"
+                                        aria-labelledby="projects__one">
+                                        <div class="course__details__paragraph" data-aos="fade-up">
+                                            <p id="video-description">{{ course.description }}</p>
+                                        </div>
+                                        <h4 class="sidebar__title aos-init aos-animate" data-aos="fade-up">Course
+                                            Details</h4>
+
+                                            
+
+                                        <div class="course__details__wraper" data-aos="fade-up">
+                                            <ul>
+                                                <li>
+                                                    Videos: <span id="video-duration">{{ course.length }}</span>
+                                                </li>
+                                                <li>
+                                                    Prerequisites: 
+                                                        {% for pre in course.prerequisite_set.all %}
+                                                            <span>{{pre.description}}</span>
+                                                        {% endfor %}
+                                                </li>
+                                            </ul>
+                                            <ul>
+                                                <li>
+                                                    Expertise Level: <span>Beginner</span>
+                                                </li>
+                                                <li>
+                                                    Code: <span>{{course.date}}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="course__list__wraper" data-aos="fade-up">
+                                            <h4 class="sidebar__title aos-init aos-animate" data-aos="fade-up"> Learning Objectives</h4>
+                                            <div class="aboutarea__list__2 blog__details__list__2" data-aos="fade-up">
+                                                <ul>
+                                                    {% for learn in course.learning_set.all %}
+                                                        <li>
+                                                            <i class="icofont-check"></i>
+                                                            <p>{{learn.description}}...</p>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <h4 class="sidebar__title aos-init aos-animate" data-aos="fade-up">Instructor</h4>
+                                        <div>
+                                            <div>Instructor: <span id="channel-name">{{ course.instructor_name }}</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="projects__two" role="tabpanel"
+                                        aria-labelledby="projects__two">
+                                        <h5 class='my-2'>Download the Resource File </h5>
+                                        <a href="{{ course.resource.url }}" download>Download</a>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-4">
+                        <h4 class="sidebar__title aos-init aos-animate" data-aos="fade-up">Course Content</h4>
+                        <div class="course__content__list">
+
+                            {% for video in videos %}
+                                <a class="course__content__item {% if v == video %} active {% endif %}" href='?lecture={{video.serial_number}}'>
+
+                                    <div class="course__content__watch_icon">
+                                        <i class="icofont-ui-play"></i>
+                                    </div>
+                                    <div class="course__content__detail">
+                                        {% comment %} {% if v == video %} active {% endif %} {% endcomment %}
+                                        <div class="course__content__detail_course_title">{{video}}</div>
+        
+                                    </div>
+                                    
+                                </a>
+
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+
+
+        <script src="{% static 'base/js/main.js' %}"></script>
+        <!-- Include the Plyr library script -->
+        <script src="https://cdn.jsdelivr.net/npm/plyr@3.6.4/dist/plyr.polyfilled.min.js"></script>
+        <!-- Include the YouTube Player API script -->
+        <script src="https://www.youtube.com/iframe_api"></script>
+
+        <script>
+            let isVideoPlaying = false;
+            let videoStartTime = 0;
+            let videoDuration = 0; // Actual duration of the YouTube video in seconds
+
+            // Function to create the YouTube player
+            function createYouTubePlayer(videoId) {
+                const player = new Plyr('#video-container', {
+                    // YouTube specific options
+                    youtube: {
+                        noCookie: true, // Enable privacy-enhanced mode
+                        iv_load_policy: 3, // Hide annotations
+                        modestbranding: 1, // Hide YouTube logo
+                        playsinline: 1, // Play inline on supported mobile devices
+                    },
+                });
+
+                // Load the YouTube video
+                player.source = {
+                    type: 'video',
+                    sources: [
+                        {
+                            src: videoId,
+                            provider: 'youtube',
+                        },
+                    ],
+                };
+
+                // Event listener for the play state of the Plyr player
+                player.on('play', () => {
+                    startVideoTimer();
+                });
+
+                // Event listener for the pause state of the Plyr player
+                player.on('pause', () => {
+                    stopVideoTimer();
+                });
+
+                // Event listener for the ended state of the Plyr player
+                player.on('ended', () => {
+                    stopVideoTimer();
+                });
+            }
+
+            // Function to start the video timer
+            function startVideoTimer() {
+                isVideoPlaying = true;
+                videoStartTime = Math.floor(Date.now() / 1000); // Get the current timestamp in seconds
+                const timer = setInterval(function () {
+                    if (isVideoPlaying) {
+                        const currentTime = Math.floor(Date.now() / 1000);
+                        videoDuration += (currentTime - videoStartTime);
+                        videoStartTime = currentTime;
+                    }
+                }, 1000);
+            }
+
+            // Function to stop the video timer and update credits when the video is stopped
+            function stopVideoTimer() {
+                isVideoPlaying = false;
+                updateCredits(videoDuration);
+                videoDuration = 0;
+            }
+
+            // Function to update the credits when the video is stopped
+            function updateCredits(duration) {
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "deduct_credits" %}',
+                    data: { duration: duration },
+                    success: function (response) {
+                        // Update the remaining credits and credit balance on the page
+                        $('#remaining-free-credits').text(response.remaining_free_credits);
+                        $('#credit-balance').text(response.credit_balance);
+
+                        // Check if the user has exhausted their credits and disable the video player
+                        if (parseFloat(response.credit_balance) <= 0 && parseFloat(response.remaining_free_credits) <= 0) {
+                            const player = Plyr.get('#video-container');
+                            player.stop();
+                            player.disable();
+                            alert('You have exhausted your credits. Please purchase more credits to continue watching videos.');
+                        }
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                });
+            }
+
+            // Event listener for the YouTube API ready state
+            function onYouTubeIframeAPIReady() {
+                // Get the video ID from the iframe src attribute
+                const videoId = $('#video-frame').attr('src');
+                createYouTubePlayer(videoId);
+            }
+        </script>
+
+
+
+    </main>
+{% endblock content %} 

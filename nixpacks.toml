@@ -1,0 +1,27 @@
+# nixpacks.toml
+
+# Specify the providers to run on the build
+providers = ["...", "python"]
+
+# Specify the build image to use
+buildImage = "ghcr.io/railwayapp/nixpacks:latest"
+
+# Specify the variables to include in the final image
+[variables]
+DJANGO_SETTINGS_MODULE = "smartlearning.settings"
+
+# Specify the static assets to copy into the /assets directory of the image
+[staticAssets]
+static = "staticfiles"
+
+# Specify the setup phase to install nix packages
+[phases.setup]
+nixPkgs = ["...", "sqlite"]
+
+# Specify the build phase to collect static files
+[phases.build]
+cmds = ["python manage.py collectstatic --noinput"]
+
+# Specify the start command for the app
+[start]
+cmd = "gunicorn smartlearning.wsgi"

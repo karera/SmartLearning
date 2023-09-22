@@ -1,0 +1,114 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block title %}
+        Enroll Course
+  {% endblock title %}
+
+{% block content %}
+
+<main class="main_wrapper">
+  
+
+   <!-- grid__section__start -->
+   <div class="gridarea">
+    <div class="container">
+      
+     
+
+      <div class="row grid" data-aos="fade-up">
+        <div class="col-12 col-xl-12 col-lg-12 col-md-6 col-sm-6 col-12 grid-item filter1 filter3">
+          <div class="gridarea__wraper">
+
+            <div class="row my-4">
+                <div class="col-6">
+                    <div class="gridarea__img"> 
+                        {% comment %} img-thumbnail {% endcomment %}
+                        <img src="{{course.thumbnail.url}}" alt="grid" />
+                        <div class="gridarea__small__button">
+                          <div class="grid__badge">{{course.category}}</div>
+                        </div>
+                        
+                      </div>      
+                </div>
+                
+    
+                <div class="col-6">
+                    <div class="gridarea__content">
+                        <div class="gridarea__heading">
+                          <h2>
+                             {{course.name}}
+                          </h2>
+                          <p>{{course.description}}</p>
+                        </div>
+                        {% comment %} <div class="gridarea__price">
+                          ${{course.discount_price}} <del>/ ${{course.price}}</del>
+                          
+                          <!-- <span> <del class="del__2">Free</del></span> -->
+                        </div> {% endcomment %}
+
+                          {% if messages %}
+                            <ul class="messages text-success mb-3">
+                                {% for message in messages %}
+                                <li>{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                          {% endif %}
+
+                        <div class="mb-4 text-lg-start">
+
+                          {% if user.is_authenticated %}
+                              {% if is_enrolled %}
+                                  <button class="default__button" disabled>Already Enrolled</button>
+                                  <a class="default__button" href="{% url 'course-detail' course.slug %}?lecture={{ course.video_set.first.serial_number }}">Watch Now</a>
+                              {% else %}
+                                <form method="post" action="">
+                                  {% csrf_token %}
+                                    <button class="default__button" type="submit" id="enrollButton">Enroll Now</button>
+                                </form>
+                                
+                              {% endif %}
+                          {% else %}
+                              <a class="default__button" href="{% url 'login' %}">Login</a>
+                          {% endif %}
+                      </div>
+
+                      
+                      
+                       
+
+                        <div class="gridarea__bottom">
+                          
+                            <div class="gridarea__small__img">
+                              <img src="{% static 'base/img/grid/grid_small_1.jpg' %}" alt="grid" />
+                              <div class="gridarea__small__content">
+                                <h6>{{course.instructor_name}}</h6>
+                              </div>
+                            </div>
+                          
+                        </div>
+                      </div>
+                </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- grid__section__end -->
+
+ 
+  
+
+</main>
+{% endblock content %}
+
+
+
+
+
+
+
+

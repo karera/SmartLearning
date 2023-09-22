@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html class="no-js" lang="zxx">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+   
+    <title>
+        {% block title %}
+          
+        {% endblock title %}
+    </title>
+
+    
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.2/plyr.css">
+
+
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="{% static 'base/css/bootstrap.min.css' %}" />
+
+    {% comment %} <link rel="stylesheet" href="{% static 'base/css/bootstrap.min.css' %}" /> {% endcomment %}
+    <link rel="stylesheet" href="{% static 'base/css/animate.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'base/css/aos.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'base/css/magnific-popup.css' %}" />
+    <link rel="stylesheet" href="{% static 'base/css/icofont.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'base/css/slick.css' %}" />
+
+ 
+
+    <link
+      rel="stylesheet"
+      href="{% static 'base/cdn.jsdelivr.net/npm/swiper%409/swiper-bundle.min.css' %}"
+    />
+    <link rel="stylesheet" href="{% static 'base/css/style.css' %}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+
+
+    <style>
+    {% block custom_css %}
+    
+    {% endblock custom_css %}
+    </style>
+
+
+
+   
+  </head>
+
+  <body class="body__wrapper">
+
+    <!-- header section start -->
+  <header>
+    <div class="headerarea transparent__header header__sticky header__area">
+      <div class="container desktop__menu__wrapper">
+        <div class="row">
+          <div class="col-xl-2 col-lg-2 col-md-6">
+            <div class="headerarea__left">
+              <div class="headerarea__left__logo">
+                <a href="/"
+                  ><img src="{% static 'base/img/logo/logo_1.png' %}" alt="logo"
+                /></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-7 col-lg-7 main_menu_wrap">
+            <div class="headerarea__main__menu">
+              <nav>
+                <ul>
+                  <li>
+                    <a class="headerarea__has__dropdown" href="/"
+                      >Home
+                    </a>
+                  </li>
+                  <li>
+                    <a class="headerarea__has__dropdown" href="{% url 'about' %}"
+                      >About Us
+                    </a>
+                  </li>
+                  <li>
+                    <a class="headerarea__has__dropdown" href="{% url 'courses' %}"
+                      >Courses
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a class="headerarea__has__dropdown" href="{% url 'contact' %}"
+                      >Contact
+                    </a>
+                  </li>
+                  
+                </ul>
+              </nav>
+            </div>
+          </div>
+          
+          <div class="col-xl-3 col-lg-3 col-md-6">
+            <div class="headerarea__right">
+              <div class="headerarea__login">
+                
+
+                {% if request.user.is_authenticated %}
+
+                <div class="dropdown">
+                  <a class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{request.user.username}}
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+
+                    <li><a  href="{% url 'user-profile' user.id %}">Profile</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+
+                  </ul>
+                </div>
+                  
+
+                {% else %}
+                  <a href="{% url 'login' %}">Login</a>
+                {% endif %}
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="container-fluid mob_menu_wrapper">
+        <div class="row align-items-center">
+          <div class="col-6">
+            <div class="mobile-logo">
+              <a class="logo__dark" href="#">
+                <img src="{% static 'base/img/logo/logo_1.png' %}" alt="logo" />
+              </a>
+            </div>
+          </div>
+      
+          <div class="col-6 text-right">
+            <nav class="navbar navbar-expand-lg navbar-light text-right">
+              <button
+                class="navbar-toggler text-right"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#mobileMenu"
+                aria-controls="mobileMenu"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+      
+              <div class="collapse navbar-collapse text-right" id="mobileMenu">
+                <ul class="navbar-nav ml-auto text-right">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">About Us</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'courses' %}">Courses</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                  </li>
+                  {% if request.user.is_authenticated %}
+                  <li class="nav-item dropdown">
+                    <a
+                      class="nav-link dropdown-toggle"
+                      href="#"
+                      id="userDropdown"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false">
+                      {{ request.user.name }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="userDropdown">
+                      <a class="dropdown-item" href="{% url 'user-profile' user.id %}">Profile</a>
+                      <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                    </div>
+                  </li>
+                  {% else %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                  </li>
+                  {% endif %}
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+      
+
+
+    </div>
+  </header>
+  <!-- header section end -->
+
+    {% block content %}
+    
+    {% endblock content %}
+
+
+    <!-- footer__section__start -->
+  <div class="footerarea">
+    <div class="container">
+      <div class="footerarea__newsletter__wraper">
+        <div class="row">
+          <div
+            class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12"
+            data-aos="fade-up"
+          >
+            <div class="footerarea__logo">
+              <a href="#"
+                ><img src="{% static 'base/img/logo/logo_2.png' %}" alt="logophoto"
+              /></a>
+            </div>
+          </div>
+          <div
+            class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12"
+            data-aos="fade-up"
+          >
+            <div class="footerarea__newsletter">
+              {% comment %} <div class="footerarea__newsletter__input">
+                <form action="#">
+                  <input type="text" placeholder="Enter your email here" />
+                  <div class="footerarea__newsletter__button">
+                    <a href="#">SUBSCRIBE NOW</a>
+                  </div>
+                </form>
+              </div> {% endcomment %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footerarea__wrapper">
+        <div class="row">
+          <div
+            class="col-xl-4 col-lg-4 col-md-6 col-sm-12"
+            data-aos="fade-up"
+          >
+            <div class="footerarea__inner footerarea__about__us">
+              <div class="footerarea__heading">
+                <h3>About us</h3>
+              </div>
+              <div class="footerarea__content">
+                <p>
+                  Smart Learning Solutions is an organization that primarily
+                  focuses on delivering content development solutions for
+                  educational purposes
+                </p>
+              </div>
+              <div class="footerarea__icon">
+                <ul>
+                  <li>
+                    <a href="http://facebook.com/"
+                      ><i class="icofont-facebook"></i
+                    ></a>
+                  </li>
+                  <li>
+                    <a href="http://twitter.com/"
+                      ><i class="icofont-twitter"></i
+                    ></a>
+                  </li>
+                  <li>
+                    <a href="http://vimeo.com/"
+                      ><i class="icofont-vimeo"></i
+                    ></a>
+                  </li>
+                  <li>
+                    <a href="http://linkedin.com/"
+                      ><i class="icofont-linkedin"></i
+                    ></a>
+                  </li>
+                  <li>
+                    <a href="http://skype.com/"
+                      ><i class="icofont-skype"></i
+                    ></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-xl-2 col-lg-2 col-md-6 col-sm-6"
+            data-aos="fade-up"
+          >
+            <div class="footerarea__inner">
+              <div class="footerarea__heading">
+                <h3>Usefull Links</h3>
+              </div>
+              <div class="footerarea__list">
+                <ul>
+                  <li>
+                    <a href="/">Home</a>
+                  </li>
+                  <li>
+                    <a href="{% url 'about' %}">About Us</a>
+                  </li>
+                  <li>
+                    <a href="{% url 'courses' %}">Courses</a>
+                  </li>
+                  
+                  <li>
+                    <a href="{% url 'contact' %}">Contact</a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-xl-3 col-lg-3 col-md-6 col-sm-6"
+            data-aos="fade-up"
+          >
+            <div class="footerarea__inner footerarea__padding__left">
+              <div class="footerarea__heading">
+                <h3>Course</h3>
+              </div>
+              <div class="footerarea__list">
+                <ul>
+                  <li>
+                    <a href="/">Data Science</a>
+                  </li>
+                  <li>
+                    <a href="/">Python for Everybody</a>
+                  </li>
+                  <li>
+                    <a href="/">Cybersecurity</a>
+                  </li>
+                  
+                  <li>
+                    <a href="/">Technical Support Fundamentals </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="col-xl-3 col-lg-3 col-md-6 col-sm-12"
+            data-aos="fade-up"
+          >
+            <div class="footerarea__right__wraper footerarea__inner">
+              <div class="footerarea__heading">
+                <h3>Recent Course</h3>
+              </div>
+              <div class="footerarea__right__list">
+                <ul>
+                  <li>
+                    <a href="#">
+                      <div class="footerarea__right__img">
+                        <img
+                          src="{% static 'base/img/footer/footer__1.png' %}"
+                          alt="footerphoto"
+                        />
+                      </div>
+                      <div class="footerarea__right__content">
+                        <span>02 Apr 2023 </span>
+                        <h6>Best Your Business</h6>
+                      </div>
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="#">
+                      <div class="footerarea__right__img">
+                        <img
+                          src="{% static 'base/img/footer/footer__2.png' %}"
+                          alt="footerphoto"
+                        />
+                      </div>
+                      <div class="footerarea__right__content">
+                        <span>02 Apr 2023 </span>
+                        <h6>Keep Your Business</h6>
+                      </div>
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="/">
+                      <div class="footerarea__right__img">
+                        <img
+                          src="{% static 'base/img/footer/footer__3.png' %}"
+                          alt="footerphoto"
+                        />
+                      </div>
+                      <div class="footerarea__right__content">
+                        <span>02 Apr 2023 </span>
+                        <h6>Nice Your Business</h6>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footerarea__copyright__wrapper">
+        <div class="row">
+          <div
+            class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+            data-aos="fade-up"
+          >
+            <div class="footerarea__copyright__content">
+              <p>
+                © 2023 Powered by <a href="/">SLS</a>. All Rights
+                Reserved.
+              </p>
+            </div>
+          </div>
+          <div
+            class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+            data-aos="fade-up"
+          >
+            <div class="footerarea__copyright__list">
+              <ul>
+                <li><a href="https://mprofile.mstaxsolution.com/" target='_'>Developed by: MehfoozDev</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- footer__section__end -->
+
+    <!-- JS here -->
+    <script src="{% static 'base/js/vendor/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'base/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Sweetalert -->
+    <script src="{% static 'base/js/sweetalert/sweetalert2.all.min.js'%}"></script>
+
+    <script src="{% static 'base/js/popper.min.js' %}"></script>
+
+    <script src="{% static 'base/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'base/js/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'base/js/slick.min.js' %}"></script>
+    <script src="{% static 'base/js/jquery.meanmenu.min.js' %}"></script>
+    <script src="{% static 'base/js/ajax-form.js' %}"></script>
+    <script src="{% static 'base/js/wow.min.js' %}"></script>
+    <script src="{% static 'base/js/jquery.scrollUp.min.js' %}"></script>
+    <script src="{% static 'base/js/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'base/js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'base/js/waypoints.min.js' %}"></script>
+    <script src="{% static 'base/js/jquery.counterup.min.js' %}"></script>
+    <script src="{% static 'base/js/plugins.js' %}"></script>
+    <script src="{% static 'base/cdn.jsdelivr.net/npm/swiper%409/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'base/js/main.js' %}"></script>
+
+
+    <script>
+        {% block custom_script %}
+            
+        
+        {% endblock custom_script %}
+    </script>
+            
+  </body>
+</html>

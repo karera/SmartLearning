@@ -1,0 +1,111 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block title %}
+        Course
+  {% endblock title %}
+
+{% block content %}
+
+<main class="main_wrapper">
+  
+   <!-- grid__section__start -->
+   <div class="gridarea">
+    <div class="container">
+      <div class="row">
+        <div class="section__title text-center" data-aos="fade-up">
+          <div class="section__title__button">
+            <div class="default__small__button">Course List</div>
+          </div>
+          <div class="section__title__heading heading__underline">
+            <h2>
+              Perfect Online <span>Course</span> <br />
+              For Your Carrer
+            </h2>
+
+          </div>
+
+
+          <div class="my-3 d-flex justify-content-center">
+            <form method="get" action="{% url 'courses' %}" class="form-inline">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control px-5" placeholder="Search">
+                    <div class="input-group-append">
+                        <button class="default__button btn-sm mx-3 px-4" type="submit">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+
+          
+        </div>
+      </div>
+
+      <div class="row" data-aos="fade-up">
+        <div class="col-xl-12">
+          <div class="gridfilter_nav grid__filter gridFilter">
+            <button class="active" data-filter="*">All</button>
+
+            {% for category in categories %}
+              <button data-filter=".filter{{ category.0 }}" class="">{{ category.1 }}</button>
+            {% endfor %}
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row grid" data-aos="fade-up">
+        
+
+        {% for course in courses %}
+          <div class="col-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 grid-item filter{{ course.category }}" >
+            <div class="gridarea__wraper">
+              <div class="gridarea__img">                
+                <img src="{{course.thumbnail.url}}" alt="grid" />
+                <div class="gridarea__small__button">
+                  <div class="grid__badge">{{course.sub_category}}</div>
+                </div> 
+              </div>
+
+              <div class="gridarea__content">
+                <div class="gridarea__heading">
+                  <h3>
+                    <a href="{% url 'enroll' course.slug %}">
+                        {{course.name}}
+                      </a>
+                  </h3>
+                </div>
+                <div class="gridarea__price">
+                  <p>Enroll Now</p>
+                  {% comment %} ${{course.discount_price}} <del>/ ${{course.price}}</del> {% endcomment %}
+                  <!-- <span> <del class="del__2">Free</del></span> -->
+                </div>
+                <div class="gridarea__bottom">
+                  
+                    <div class="gridarea__small__img">
+                      <img src="{% static 'base/img/grid/grid_small_1.jpg' %}" alt="grid" />
+                      <div class="gridarea__small__content">
+                        <h6>{{course.instructor_name}}</h6>
+                      </div>
+                    </div>
+                  
+                </div>
+              </div>
+
+            </div>
+          </div>
+        {% endfor %}
+
+
+      </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- grid__section__end -->
+  {% endblock content %}
+
+    </div>
+</main>

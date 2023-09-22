@@ -1,0 +1,70 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block title %}
+        SLS | Contact Us
+  {% endblock title %}
+
+{% block content %}
+
+  <main class="main_wrapper">
+    
+
+    <!-- Contcat Us Area -->
+    <div class="educationarea">
+      <div class="container  ">
+        <div class="row ">
+
+          <div class="col-xl-6 col-lg-6 col-md-12 col-12 ">
+            <div class="aboutarea__img__inner text-center">
+              <div class="aboutarea__img" data-tilt>
+                <img
+                  class="aboutimg__1"
+                  src="{% static 'base/img/about/about_8.png' %}"
+                  alt="aboutimg"
+                />
+                <img
+                  class="aboutimg__2"
+                  src="{% static 'base/img/about/about_1.png' %}"
+                  alt="aboutimg"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-12 col-12 ">
+            <div class="aboutarea__content__wraper">
+              <div class="aboutarea__button">
+                <div class="default__small__button">About Us</div>
+              </div>
+              <div class="aboutarea__headding heading__underline">
+                <h2>Welcome to the <span>Smart</span> Learning Solutions</h2>
+              </div>
+              <div class="aboutarea__para">
+                <p>
+                  We are a content-driven company that offers solutions for
+                  your educational needs. Our wide range of courses ensure
+                  that you can choose to strengthen the area of your interest,
+                  at your own pace. We constantly focus on innovative and
+                  compelling content that enables you to update your knowledge
+                  base, while focussing on long-term learning.
+                </p>
+              </div>
+              <div class="aboutarea__bottom__button">
+                <a class="default__button" href="{% url 'home' %}">
+                  More About
+                  <i class="icofont-long-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <!-- Contact Us Area -->
+
+  
+    
+  </main>
+
+{% endblock content %}
