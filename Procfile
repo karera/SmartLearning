@@ -1,1 +1,1 @@
-web: gunicorn 'smartlearning'.wsgi
+web: gunicorn smartlearning.wsgi
